@@ -6,20 +6,23 @@ window = pygame.display.set_mode((640, 480))
 
 robot = pygame.image.load("robot.png")
 
-angle = 0
 clock = pygame.time.Clock()
+
+x, y, speed = 0, 0, 1
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             exit()
 
-    x = 320+math.cos(angle)*100-robot.get_width()/2
-    y = 240+math.sin(angle)*100-robot.get_height()/2
+    if y == 480 - robot.get_height():
+        speed = -1
+    if y == 0:
+        speed = 1
+    y += speed
 
     window.fill((0, 0, 0))
     window.blit(robot, (x, y))
     pygame.display.flip()
 
-    angle += 0.01
     clock.tick(60)
