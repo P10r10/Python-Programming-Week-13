@@ -4,11 +4,13 @@ pygame.init()
 window = pygame.display.set_mode((640, 480))
 
 robot = pygame.image.load("robot.png")
-x = 0
-y = 480-robot.get_height()
+x = 320 - robot.get_width()
+y = 240 - robot.get_height()
 
 to_right = False
 to_left = False
+to_up = False
+to_down = False
 
 clock = pygame.time.Clock()
 
@@ -19,12 +21,20 @@ while True:
                 to_left = True
             if event.key == pygame.K_RIGHT:
                 to_right = True
+            if event.key == pygame.K_UP:
+                to_up = True
+            if event.key == pygame.K_DOWN:
+                to_down = True
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
                 to_left = False
             if event.key == pygame.K_RIGHT:
                 to_right = False
+            if event.key == pygame.K_UP:
+                to_up = False
+            if event.key == pygame.K_DOWN:
+                to_down = False
 
         if event.type == pygame.QUIT:
             exit()
@@ -33,9 +43,13 @@ while True:
         x += 2
     if to_left:
         x -= 2
+    if to_up:
+        y -= 2
+    if to_down:
+        y += 2
 
     window.fill((0, 0, 0))
     window.blit(robot, (x, y))
     pygame.display.flip()
 
-    clock.tick(160)
+    clock.tick(60)
